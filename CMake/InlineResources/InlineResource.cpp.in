@@ -1,0 +1,14 @@
+#include <map>
+#include <vector>
+
+namespace InlineResources {
+    std::map<std::string, std::vector<char>> &getResourcesMap();
+}
+
+namespace {
+    std::vector<char> resource {
+        @resource_content@
+    };
+
+    auto _ = (InlineResources::getResourcesMap()["@resource_name@"] = resource);
+}
