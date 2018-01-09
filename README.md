@@ -9,7 +9,7 @@ It is licensed under the MIT License.
 
 ## Requirements ##
 
-* A C++17 compliant compiler,
+* A C++11 compliant compiler,
 * CMake >= 3.9,
 * Boost.Test >= 1.62.
 
