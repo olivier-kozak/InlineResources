@@ -25,3 +25,9 @@ BOOST_AUTO_TEST_CASE(getTestResource2) {
 BOOST_AUTO_TEST_CASE(getNonExistingResource) {
     BOOST_CHECK_THROW(InlineResources::getResource("NonExistingResource.txt"), std::runtime_error);
 }
+
+BOOST_AUTO_TEST_CASE(getTestResourceAsStr) {
+    std::string resourceStr = InlineResources::getResourceAsStr("TestResourceContainingString.txt");
+
+    BOOST_TEST(resourceStr == "Here is a test resource containing a string.");
+}

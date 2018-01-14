@@ -19,4 +19,10 @@ namespace InlineResources {
             throw std::runtime_error((boost::format("Failed to get non existing resource %1%") % name).str());
         }
     }
+
+    std::string getResourceAsStr(const std::string &name) {
+        const std::vector<char> &resource = getResource(name);
+
+        return std::string(resource.begin(), resource.end());
+    }
 }

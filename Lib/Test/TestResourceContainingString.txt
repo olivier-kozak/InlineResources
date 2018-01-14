@@ -1,0 +1,1 @@
+Here is a test resource containing a string.
