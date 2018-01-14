@@ -21,9 +21,29 @@ It is licensed under the MIT License.
     ```
 
 * You can now use it in your own project as follows:
-    ```
-    find_package(InlineResources REQUIRED)
 
-    target_include_directories(${yourTarget} ${InlineResources_INCLUDE_DIR})
-    target_link_libraries(${yourTarget} ${InlineResources_LIBRARY})
-    ```
+    * CMakeLists.txt
+        ```
+        find_package(InlineResources REQUIRED)
+
+        add_executable(MyProgram main.cpp ...)
+
+        inline_resources(MyProgram "resource.txt" "otherResource.txt" ...)
+
+        target_include_directories(${yourTarget} ${InlineResources_INCLUDE_DIR})
+        target_link_libraries(${yourTarget} ${InlineResources_LIBRARY})
+        ```
+
+    * main.cpp
+        ```
+        #include <InlineResources.h>
+
+        int main() {
+            std::vector<char> resource = InlineResources::getResource("resource.txt");
+            std::vector<char> otherResource = InlineResources::getResource("otherResource.txt");
+
+            ...
+
+            return 0;
+        }
+        ```
