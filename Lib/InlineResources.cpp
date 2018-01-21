@@ -15,20 +15,24 @@ namespace InlineResources {
     const std::vector<char> &getResource(const std::string &name) {
         if (getResourcesMap().count(name) == 1) {
             return getResourcesMap()[name];
-        } else {
-            throw std::runtime_error((boost::format("Failed to get non existing resource %1%") % name).str());
         }
+
+        throw std::runtime_error((boost::format("Failed to get non existing resource %1%") % name).str());
     }
 
-    std::string getResourceAsStr(const std::string &name) {
+    std::map<std::string, std::string> resourcesStrs;
+
+    const std::string &getResourceAsStr(const std::string &name) {
         const std::vector<char> &resource = getResource(name);
 
-        return std::string(resource.begin(), resource.end());
+        if (resourcesStrs.count(name) == 0) {
+            resourcesStrs[name] = std::string(resource.begin(), resource.end());
+        }
+
+        return resourcesStrs[name];
     }
 
     const char *getResourceAsCStr(const std::string &name) {
-        const std::vector<char> &resource = getResource(name);
-
-        return resource.data();
+        return getResourceAsStr(name).c_str();
     }
 }
