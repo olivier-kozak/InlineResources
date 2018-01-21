@@ -3,8 +3,6 @@
 #include <map>
 #include <stdexcept>
 
-#include <boost/format.hpp>
-
 namespace InlineResources {
     std::map<std::string, std::vector<char>> &getResourcesMap() {
         static std::map<std::string, std::vector<char>> resources;
@@ -17,7 +15,7 @@ namespace InlineResources {
             return getResourcesMap()[name];
         }
 
-        throw std::runtime_error((boost::format("Failed to get non existing resource %1%") % name).str());
+        throw std::runtime_error("Failed to get non existing resource \"" + name + "\"");
     }
 
     std::map<std::string, std::string> resourcesStrs;
