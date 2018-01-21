@@ -25,4 +25,10 @@ namespace InlineResources {
 
         return std::string(resource.begin(), resource.end());
     }
+
+    const char *getResourceAsCStr(const std::string &name) {
+        const std::vector<char> &resource = getResource(name);
+
+        return resource.data();
+    }
 }

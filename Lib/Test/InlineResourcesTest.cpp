@@ -1,3 +1,4 @@
+#include <cstring>
 #include <stdexcept>
 #include <string>
 
@@ -30,4 +31,10 @@ BOOST_AUTO_TEST_CASE(getTestResourceAsStr) {
     std::string resourceStr = InlineResources::getResourceAsStr("TestResourceContainingString.txt");
 
     BOOST_TEST(resourceStr == "Here is a test resource containing a string.");
+}
+
+BOOST_AUTO_TEST_CASE(getTestResourceAsCStr) {
+    const char *resourceCStr = InlineResources::getResourceAsCStr("TestResourceContainingString.txt");
+
+    BOOST_TEST(std::strcmp(resourceCStr, "Here is a test resource containing a string.") == 0);
 }
