@@ -30,7 +30,7 @@ It is licensed under the MIT License.
 
         inline_resources(MyProgram "resource.txt" "otherResource.txt" ...)
 
-        target_include_directories(${yourTarget} ${InlineResources_INCLUDE_DIR})
+        target_include_directories(${yourTarget} PRIVATE ${InlineResources_INCLUDE_DIR})
         target_link_libraries(${yourTarget} ${InlineResources_LIBRARY})
         ```
 
