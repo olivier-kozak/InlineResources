@@ -2,11 +2,11 @@
 #include <vector>
 
 namespace InlineResources {
-    std::map<std::string, std::vector<char>> &getResourcesMap();
+    std::map<std::string, std::vector<unsigned char>> &getResourcesMap();
 }
 
 namespace {
-    std::vector<char> resource {
+    std::vector<unsigned char> resource {
         @resource_content@
     };
 

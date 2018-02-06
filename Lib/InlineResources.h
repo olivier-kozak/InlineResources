@@ -5,7 +5,7 @@
 #include <vector>
 
 namespace InlineResources {
-    const std::vector<char> &getResource(const std::string &name);
+    const std::vector<unsigned char> &getResource(const std::string &name);
 
     const std::string &getResourceAsStr(const std::string &name);
     const char *getResourceAsCStr(const std::string &name);
