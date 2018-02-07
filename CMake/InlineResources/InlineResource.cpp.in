@@ -1,5 +1,6 @@
 #include <map>
 #include <vector>
+#include <utility>
 
 namespace InlineResources {
     std::map<std::string, std::vector<unsigned char>> &getResourcesMap();
@@ -10,5 +11,5 @@ namespace {
         @resource_content@
     };
 
-    auto _ = (InlineResources::getResourcesMap()["@resource_name@"] = resource);
+    auto _ = (InlineResources::getResourcesMap().insert(std::make_pair("@resource_name@", std::move(resource))));
 }
