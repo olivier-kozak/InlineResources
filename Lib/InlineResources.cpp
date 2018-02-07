@@ -5,7 +5,7 @@
 
 namespace InlineResources {
     std::map<std::string, std::vector<unsigned char>> &getResourcesMap() {
-        static std::map<std::string, std::vector<unsigned char>> resources;
+        static std::map<std::string, std::vector<unsigned char>> resources {};
 
         return resources;
     };
