@@ -7,8 +7,7 @@
 namespace InlineResources {
     const std::vector<unsigned char> &getResource(const std::string &name);
 
-    const std::string &getResourceAsStr(const std::string &name);
-    const char *getResourceAsCStr(const std::string &name);
+    std::string getResourceAsStr(const std::string &name);
 }
 
 #endif //INLINE_RESOURCES_H

@@ -18,19 +18,9 @@ namespace InlineResources {
         throw std::runtime_error("Failed to get non existing resource \"" + name + "\"");
     }
 
-    std::map<std::string, std::string> resourcesStrs;
-
-    const std::string &getResourceAsStr(const std::string &name) {
+    std::string getResourceAsStr(const std::string &name) {
         const std::vector<unsigned char> &resource = getResource(name);
 
-        if (resourcesStrs.count(name) == 0) {
-            resourcesStrs[name] = std::string(resource.begin(), resource.end());
-        }
-
-        return resourcesStrs[name];
-    }
-
-    const char *getResourceAsCStr(const std::string &name) {
-        return getResourceAsStr(name).c_str();
+        return { resource.begin(), resource.end() };
     }
 }
