@@ -4,6 +4,8 @@ project(InlineResources)
 
 set(CMAKE_CXX_STANDARD 11)
 
+enable_testing()
+
 include(CMake/InlineResources/InlineResourcesConfig.cmake)
 
 install(DIRECTORY CMake/InlineResources DESTINATION lib/cmake)

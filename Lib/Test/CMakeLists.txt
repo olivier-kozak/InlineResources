@@ -1,5 +1,3 @@
-enable_testing()
-
 find_package(Boost 1.62 REQUIRED COMPONENTS unit_test_framework)
 
 add_executable(TestUsingCMakeGenerator InlineResourcesTest.cpp)
