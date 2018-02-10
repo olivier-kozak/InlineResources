@@ -20,7 +20,7 @@ It is licensed under the MIT License.
     cmake . && make && sudo make install
     ```
 
-* Then, in your project's CMakeLists.txt file:
+* Then, in your project's `CMakeLists.txt` file:
 
     * Mark the package as required:
         ```
@@ -40,7 +40,7 @@ It is licensed under the MIT License.
         target_link_libraries(MyProgram ${InlineResources_LIBRARY})
         ```
 
-* You can access your resources as follows:
+* You can now access your resources as follows:
     ```
     #include <InlineResources.h>
 
