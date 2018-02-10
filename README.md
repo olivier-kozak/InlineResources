@@ -15,38 +15,44 @@ It is licensed under the MIT License.
 
 ## Getting started ##
 
-* First, build and install the package as follows:
+* First, build and install the package:
     ```
     cmake . && make && sudo make install
     ```
 
-* You can now use it in your own project as follows:
+* Then, in your project's CMakeLists.txt file:
 
-    * CMakeLists.txt
+    * Mark the package as required:
         ```
         find_package(InlineResources REQUIRED)
+        ```
 
+    * Declare the resources to inline with your target:
+        ```
         add_executable(MyProgram main.cpp ...)
 
         inline_resources(MyProgram "resource.txt" "otherResource.txt" ...)
-
-        target_include_directories(${yourTarget} PRIVATE ${InlineResources_INCLUDE_DIR})
-        target_link_libraries(${yourTarget} ${InlineResources_LIBRARY})
         ```
 
-    * main.cpp
+    * Declare the required include directory and library:
         ```
-        #include <InlineResources.h>
-
-        int main() {
-            std::vector<char> resource = InlineResources::getResource("resource.txt");
-            std::vector<char> otherResource = InlineResources::getResource("otherResource.txt");
-
-            ...
-
-            return 0;
-        }
+        target_include_directories(MyProgram PRIVATE ${InlineResources_INCLUDE_DIR})
+        target_link_libraries(MyProgram ${InlineResources_LIBRARY})
         ```
+
+* You can access your resources as follows:
+    ```
+    #include <InlineResources.h>
+
+    int main() {
+        auto resource = InlineResources::getResourceAs<std::string>("resource.txt");
+        auto otherResource = InlineResources::getResourceAs<std::string>("otherResource.txt");
+
+        ...
+
+        return 0;
+    }
+    ```
 
 ## Troubleshooting ##
 
