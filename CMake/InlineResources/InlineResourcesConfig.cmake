@@ -23,7 +23,7 @@ function(inline_resource_using_cmake_generator target resource_file)
                 ${target} ${resource_file_absolute} ${inline_resource_template}
     )
 
-    target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp ${resource_file} ${config_extra_files})
+    target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp)
 
 endfunction(inline_resource_using_cmake_generator)
 
@@ -44,7 +44,7 @@ function(inline_resource_using_py_generator target resource_file)
                 ${CMAKE_CURRENT_BINARY_DIR} ${target} ${resource_file_absolute} ${inline_resource_template}
     )
 
-    target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp ${resource_file} ${config_extra_files})
+    target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp)
 
 endfunction(inline_resource_using_py_generator)
 

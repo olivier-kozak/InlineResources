@@ -1,13 +1,13 @@
 find_package(Boost 1.62 REQUIRED COMPONENTS unit_test_framework)
 
 add_executable(TestUsingCMakeGenerator InlineResourcesTest.cpp)
-inline_resources_using_cmake_generator(TestUsingCMakeGenerator TestResource1.txt TestResource2.txt)
+inline_resources_using_cmake_generator(TestUsingCMakeGenerator TestResource1.txt TestResource2.txt TestResourceObj.obj)
 target_link_libraries(TestUsingCMakeGenerator InlineResources Boost::unit_test_framework)
 
 add_test(TestUsingCMakeGenerator TestUsingCMakeGenerator)
 
 add_executable(TestUsingPyGenerator InlineResourcesTest.cpp)
-inline_resources_using_py_generator(TestUsingPyGenerator TestResource1.txt TestResource2.txt)
+inline_resources_using_py_generator(TestUsingPyGenerator TestResource1.txt TestResource2.txt TestResourceObj.obj)
 target_link_libraries(TestUsingPyGenerator InlineResources Boost::unit_test_framework)
 
 add_test(TestUsingPyGenerator TestUsingPyGenerator)

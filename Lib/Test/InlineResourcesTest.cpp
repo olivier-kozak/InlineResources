@@ -21,6 +21,12 @@ BOOST_AUTO_TEST_CASE(getTestResource2) {
     BOOST_TEST(resourceStr == "Here is another test resource.");
 }
 
+BOOST_AUTO_TEST_CASE(getTestResourceObj) {
+    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResourceObj.obj");
+
+    BOOST_TEST(resourceStr == "Here is an OBJ test resource.");
+}
+
 BOOST_AUTO_TEST_CASE(getNonExistingResource) {
     BOOST_CHECK_THROW(InlineResources::getResource("NonExistingResource.txt"), std::runtime_error);
 }
