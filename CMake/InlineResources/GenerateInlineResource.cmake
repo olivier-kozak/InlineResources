@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(inline_resource_template ${CMAKE_ARGV5})
+set(inline_resource_template ${CMAKE_ARGV6})
 
-function(generate_inline_resource target resource_file)
+function(generate_inline_resource target resource_name resource_file)
 
     set(inline_resources_dir ${CMAKE_CURRENT_BINARY_DIR}/${target}_InlineResources)
     file(MAKE_DIRECTORY ${inline_resources_dir})
-
-    get_filename_component(resource_name ${resource_file} NAME)
 
     file(READ ${resource_file} resource_file_content HEX)
 
@@ -33,4 +31,4 @@ function(generate_inline_resource target resource_file)
 
 endfunction(generate_inline_resource)
 
-generate_inline_resource(${CMAKE_ARGV3} ${CMAKE_ARGV4})
+generate_inline_resource(${CMAKE_ARGV3} ${CMAKE_ARGV4} ${CMAKE_ARGV5})

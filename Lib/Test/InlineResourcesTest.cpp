@@ -9,22 +9,22 @@
 
 #include <InlineResources.h>
 
-BOOST_AUTO_TEST_CASE(getTestResource1) {
-    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResource1.txt");
+BOOST_AUTO_TEST_CASE(getTestResource) {
+    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResource.txt");
 
     BOOST_TEST(resourceStr == "Here is a test resource.");
-}
-
-BOOST_AUTO_TEST_CASE(getTestResource2) {
-    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResource2.txt");
-
-    BOOST_TEST(resourceStr == "Here is another test resource.");
 }
 
 BOOST_AUTO_TEST_CASE(getTestResourceObj) {
     auto resourceStr = InlineResources::getResourceAs<std::string>("TestResourceObj.obj");
 
     BOOST_TEST(resourceStr == "Here is an OBJ test resource.");
+}
+
+BOOST_AUTO_TEST_CASE(getTestResourceWithinDirectory) {
+    auto resourceStr = InlineResources::getResourceAs<std::string>("Directory/TestResource.txt");
+
+    BOOST_TEST(resourceStr == "Here is a test resource within a directory.");
 }
 
 BOOST_AUTO_TEST_CASE(getNonExistingResource) {

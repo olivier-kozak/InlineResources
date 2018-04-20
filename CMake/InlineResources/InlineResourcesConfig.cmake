@@ -11,8 +11,15 @@ function(inline_resource_using_cmake_generator target resource_file)
     set(inline_resources_dir ${CMAKE_CURRENT_BINARY_DIR}/${target}_InlineResources)
     file(MAKE_DIRECTORY ${inline_resources_dir})
 
-    get_filename_component(resource_name ${resource_file} NAME)
+    get_filename_component(resource_filename ${resource_file} NAME)
+    get_filename_component(resource_directory ${resource_file} DIRECTORY)
     get_filename_component(resource_file_absolute ${resource_file} ABSOLUTE)
+
+    if(resource_directory)
+        set(resource_name ${resource_directory}/${resource_filename})
+    else(resource_directory)
+        set(resource_name ${resource_filename})
+    endif(resource_directory)
 
     set(config_extra_files ${generate_inline_resource_cmake} ${inline_resource_template})
 
@@ -20,7 +27,7 @@ function(inline_resource_using_cmake_generator target resource_file)
             OUTPUT ${inline_resources_dir}/${resource_name}.cpp
             DEPENDS ${resource_file} ${config_extra_files}
             COMMAND ${CMAKE_COMMAND} -P ${generate_inline_resource_cmake}
-                ${target} ${resource_file_absolute} ${inline_resource_template}
+                ${target} ${resource_name} ${resource_file_absolute} ${inline_resource_template}
     )
 
     target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp)
@@ -32,8 +39,15 @@ function(inline_resource_using_py_generator target resource_file)
     set(inline_resources_dir ${CMAKE_CURRENT_BINARY_DIR}/${target}_InlineResources)
     file(MAKE_DIRECTORY ${inline_resources_dir})
 
-    get_filename_component(resource_name ${resource_file} NAME)
+    get_filename_component(resource_filename ${resource_file} NAME)
+    get_filename_component(resource_directory ${resource_file} DIRECTORY)
     get_filename_component(resource_file_absolute ${resource_file} ABSOLUTE)
+
+    if(resource_directory)
+        set(resource_name ${resource_directory}/${resource_filename})
+    else(resource_directory)
+        set(resource_name ${resource_filename})
+    endif(resource_directory)
 
     set(config_extra_files ${generate_inline_resource_py} ${inline_resource_template})
 
@@ -41,7 +55,8 @@ function(inline_resource_using_py_generator target resource_file)
             OUTPUT ${inline_resources_dir}/${resource_name}.cpp
             DEPENDS ${resource_file} ${config_extra_files}
             COMMAND ${PYTHON_EXECUTABLE} ${generate_inline_resource_py}
-                ${CMAKE_CURRENT_BINARY_DIR} ${target} ${resource_file_absolute} ${inline_resource_template}
+                ${CMAKE_CURRENT_BINARY_DIR}
+                ${target} ${resource_name} ${resource_file_absolute} ${inline_resource_template}
     )
 
     target_sources(${target} PUBLIC ${inline_resources_dir}/${resource_name}.cpp)
