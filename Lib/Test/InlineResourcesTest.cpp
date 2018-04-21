@@ -15,6 +15,18 @@ BOOST_AUTO_TEST_CASE(getTestResource) {
     BOOST_TEST(resourceStr == "Here is a test resource.");
 }
 
+BOOST_AUTO_TEST_CASE(getTestResource1) {
+    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResource1.txt");
+
+    BOOST_TEST(resourceStr == "Here is a first test resource in a bundle.");
+}
+
+BOOST_AUTO_TEST_CASE(getTestResource2) {
+    auto resourceStr = InlineResources::getResourceAs<std::string>("TestResource2.txt");
+
+    BOOST_TEST(resourceStr == "Here is a second test resource in a bundle.");
+}
+
 BOOST_AUTO_TEST_CASE(getTestResourceObj) {
     auto resourceStr = InlineResources::getResourceAs<std::string>("TestResourceObj.obj");
 

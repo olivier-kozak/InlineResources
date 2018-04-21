@@ -48,9 +48,12 @@ endfunction(inline_resource)
 
 function(inline_resources target)
 
-    foreach(resource_file ${ARGN})
-        inline_resource(${target} ${resource_file})
-    endforeach(resource_file)
+    foreach(resource_file_pattern ${ARGN})
+        file(GLOB resource_files RELATIVE ${CMAKE_CURRENT_LIST_DIR} ${resource_file_pattern})
+        foreach(resource_file ${resource_files})
+            inline_resource(${target} ${resource_file})
+        endforeach(resource_file)
+    endforeach(resource_file_pattern)
 
 endfunction(inline_resources)
 
