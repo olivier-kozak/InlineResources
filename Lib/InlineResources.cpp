@@ -7,7 +7,7 @@
 #include <PortableWildcards.h>
 
 namespace InlineResources {
-    std::map<std::string, std::vector<unsigned char>> &getResourcesMap();
+    std::map<const std::string, const std::vector<unsigned char>> &getResourcesMap();
 }
 
 namespace {
@@ -34,8 +34,8 @@ namespace {
 }
 
 namespace InlineResources {
-    std::map<std::string, std::vector<unsigned char>> &getResourcesMap() {
-        static std::map<std::string, std::vector<unsigned char>> resources {};
+    std::map<const std::string, const std::vector<unsigned char>> &getResourcesMap() {
+        static std::map<const std::string, const std::vector<unsigned char>> resources {};
 
         return resources;
     };

@@ -3,7 +3,7 @@
 #include <utility>
 
 namespace InlineResources {
-    std::map<std::string, std::vector<unsigned char>> &getResourcesMap();
+    std::map<const std::string, const std::vector<unsigned char>> &getResourcesMap();
 }
 
 namespace {
