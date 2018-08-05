@@ -1,1 +1,0 @@
-Here is a second test resource in a bundle.

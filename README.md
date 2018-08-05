@@ -11,7 +11,8 @@ It is licensed under the MIT License.
 
 * A C++11 compliant compiler,
 * CMake >= 3.9,
-* Boost.Test >= 1.62.
+* Boost.Test >= 1.62,
+* PortableWildcards >= 1.0.0.
 
 ## Getting started ##
 
@@ -53,6 +54,53 @@ It is licensed under the MIT License.
         return 0;
     }
     ```
+
+## Usage ##
+
+### Access resources from memory ###
+
+This is the fastest way to access your inline resources, as they can be
+directly streamed from memory with no extra cost:
+```
+#include <InlineResources.h>
+
+int main() {
+    auto resource = InlineResources::getResourceAs<std::string>("resource.txt");
+    auto otherResource = InlineResources::getResourceAs<std::string>("otherResource.txt");
+
+    ...
+
+    return 0;
+}
+```
+
+### Access resources from disk ###
+
+Sometimes, streaming resources directly from memory may not be possible.
+It can be the case, for example, when using some libraries that simply
+do not support anything else but disk files.
+
+In that case, you may first need to unpack your inline resources -all or
+just a subset of them- on disk, then read them with standard C++, which
+can be done as follows:
+```
+#include <fstream>
+
+#include <InlineResources.h>
+
+int main() {
+    InlineResources::UnpackedResources unpackedResources("*.txt");
+    std::ifstream resource((unpackedResources.path / "resource.txt").string());
+    std::ifstream resource((unpackedResources.path / "otherResource.txt").string());
+
+    ...
+
+    return 0;
+}
+```
+
+Be aware that `UnpackedResources` uses RTTI to clean up written files at
+the end of the scope, so do not try to access resources outside of it.
 
 ## Troubleshooting ##
 

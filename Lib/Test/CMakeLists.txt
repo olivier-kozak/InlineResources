@@ -1,6 +1,6 @@
 find_package(Boost 1.62 REQUIRED COMPONENTS unit_test_framework)
 
-set(TEST_RESOURCES Resources/TestResource.txt Resources/TestResource?.txt Resources/TestResourceObj.obj)
+set(TEST_RESOURCES Resources/Resource.txt Resources/Bundle/* Resources/ResourceObj.obj)
 
 find_package(PythonInterp 2.7 REQUIRED)
 
