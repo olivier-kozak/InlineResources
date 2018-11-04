@@ -8,12 +8,21 @@ get_filename_component(inline_resource_template ${CMAKE_CURRENT_LIST_DIR}/Inline
 
 function(inline_resource target resource_file)
 
+    cmake_parse_arguments(inline_resource "" "PARENT" "" ${ARGN})
+
+    set(parent ${inline_resource_PARENT})
+
     set(inline_resources_dir ${CMAKE_CURRENT_BINARY_DIR}/${target}_InlineResources)
     file(MAKE_DIRECTORY ${inline_resources_dir})
 
     get_filename_component(resource_filename ${resource_file} NAME)
     get_filename_component(resource_directory ${resource_file} DIRECTORY)
-    get_filename_component(resource_file_absolute ${resource_file} ABSOLUTE)
+
+    if(parent)
+        get_filename_component(resource_file_absolute ${parent}/${resource_file} ABSOLUTE)
+    else(parent)
+        get_filename_component(resource_file_absolute ${resource_file} ABSOLUTE)
+    endif(parent)
 
     if(resource_directory)
         set(resource_name ${resource_directory}/${resource_filename})
@@ -26,7 +35,7 @@ function(inline_resource target resource_file)
     if(PYTHONINTERP_FOUND)
         add_custom_command(
                 OUTPUT ${inline_resources_dir}/${resource_name}.cpp
-                DEPENDS ${resource_file} ${config_extra_files}
+                DEPENDS ${resource_file_absolute} ${config_extra_files}
                 COMMAND
                     ${PYTHON_EXECUTABLE} ${generate_inline_resource_py}
                     ${CMAKE_CURRENT_BINARY_DIR}
@@ -35,7 +44,7 @@ function(inline_resource target resource_file)
     else(PYTHONINTERP_FOUND)
         add_custom_command(
                 OUTPUT ${inline_resources_dir}/${resource_name}.cpp
-                DEPENDS ${resource_file} ${config_extra_files}
+                DEPENDS ${resource_file_absolute} ${config_extra_files}
                 COMMAND
                     ${CMAKE_COMMAND} -P ${generate_inline_resource_cmake}
                     ${target} ${resource_name} ${resource_file_absolute} ${inline_resource_template}
@@ -48,10 +57,24 @@ endfunction(inline_resource)
 
 function(inline_resources target)
 
-    foreach(resource_file_pattern ${ARGN})
-        file(GLOB resource_files RELATIVE ${CMAKE_CURRENT_LIST_DIR} ${resource_file_pattern})
+    cmake_parse_arguments(inline_resources "" "PARENT" "" ${ARGN})
+
+    set(resource_file_patterns ${inline_resources_UNPARSED_ARGUMENTS})
+    set(parent ${inline_resources_PARENT})
+
+    foreach(resource_file_pattern ${resource_file_patterns})
+        if(parent)
+            file(GLOB resource_files RELATIVE ${CMAKE_CURRENT_LIST_DIR}/${parent} ${parent}/${resource_file_pattern})
+        else(parent)
+            file(GLOB resource_files RELATIVE ${CMAKE_CURRENT_LIST_DIR} ${resource_file_pattern})
+        endif(parent)
+
         foreach(resource_file ${resource_files})
-            inline_resource(${target} ${resource_file})
+            if(parent)
+                inline_resource(${target} ${resource_file} PARENT ${parent})
+            else(parent)
+                inline_resource(${target} ${resource_file})
+            endif(parent)
         endforeach(resource_file)
     endforeach(resource_file_pattern)
 

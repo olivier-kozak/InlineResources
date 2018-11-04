@@ -22,91 +22,85 @@ namespace {
 }
 
 BOOST_AUTO_TEST_SUITE(getResource)
-    BOOST_AUTO_TEST_CASE(getResource) {
-        auto resourceStr = InlineResources::getResourceAs<std::string>("Resources/Resource.txt");
+    BOOST_AUTO_TEST_CASE(getOneResource) {
+        auto resourceStr = InlineResources::getResourceAs<std::string>("Resource.obj");
 
         BOOST_TEST(resourceStr == "Here is a resource.");
     }
 
     BOOST_AUTO_TEST_CASE(getFirstResourceInBundle) {
-        auto resourceStr = InlineResources::getResourceAs<std::string>("Resources/Bundle/Resource1.txt");
+        auto resourceStr = InlineResources::getResourceAs<std::string>("Bundle/Resource1.obj");
 
         BOOST_TEST(resourceStr == "Here is a first resource in a bundle.");
     }
 
     BOOST_AUTO_TEST_CASE(getSecondResourceInBundle) {
-        auto resourceStr = InlineResources::getResourceAs<std::string>("Resources/Bundle/Resource2.txt");
+        auto resourceStr = InlineResources::getResourceAs<std::string>("Bundle/Resource2.obj");
 
         BOOST_TEST(resourceStr == "Here is a second resource in a bundle.");
     }
 
-    BOOST_AUTO_TEST_CASE(getResourceOfTypeObj) {
-        auto resourceStr = InlineResources::getResourceAs<std::string>("Resources/ResourceObj.obj");
-
-        BOOST_TEST(resourceStr == "Here is a resource of type OBJ.");
-    }
-
     BOOST_AUTO_TEST_CASE(getNonExistingResource) {
-        BOOST_CHECK_THROW(InlineResources::getResource("Resources/NonExistingResource.txt"), std::runtime_error);
+        BOOST_CHECK_THROW(InlineResources::getResource("NonExistingResource.txt"), std::runtime_error);
     }
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(unpackResources)
     BOOST_AUTO_TEST_CASE(unpackOneResource) {
-        InlineResources::UnpackedResources unpackedResources("Resources/Resource.txt");
+        InlineResources::UnpackedResources unpackedResources("Resource.obj");
 
         BOOST_TEST(boost::filesystem::exists(unpackedResources.path));
 
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Resource.txt"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resource.obj"));
 
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Resource.txt") == "Here is a resource.");
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resource.obj") == "Here is a resource.");
 
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource1.txt"));
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource2.txt"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Bundle/Resource1.obj"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Bundle/Resource2.obj"));
     }
 
     BOOST_AUTO_TEST_CASE(unpackAllResourcesInBundle) {
-        InlineResources::UnpackedResources unpackedResources("Resources/Bundle/*");
+        InlineResources::UnpackedResources unpackedResources("Bundle/*");
 
         BOOST_TEST(boost::filesystem::exists(unpackedResources.path));
 
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Resource.txt"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resource.obj"));
 
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource1.txt"));
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource2.txt"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Bundle/Resource1.obj"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Bundle/Resource2.obj"));
 
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Bundle/Resource1.txt") ==
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Bundle/Resource1.obj") ==
                    "Here is a first resource in a bundle.");
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Bundle/Resource2.txt") ==
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Bundle/Resource2.obj") ==
                    "Here is a second resource in a bundle.");
     }
 
     BOOST_AUTO_TEST_CASE(unpackAllResources) {
-        InlineResources::UnpackedResources unpackedResources("Resources/*");
+        InlineResources::UnpackedResources unpackedResources("*");
 
         BOOST_TEST(boost::filesystem::exists(unpackedResources.path));
 
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Resource.txt"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resource.obj"));
 
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Resource.txt") == "Here is a resource.");
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resource.obj") == "Here is a resource.");
 
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource1.txt"));
-        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource2.txt"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Bundle/Resource1.obj"));
+        BOOST_TEST(boost::filesystem::exists(unpackedResources.path / "Bundle/Resource2.obj"));
 
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Bundle/Resource1.txt") ==
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Bundle/Resource1.obj") ==
                    "Here is a first resource in a bundle.");
-        BOOST_TEST(readFileAsStr(unpackedResources.path / "Resources/Bundle/Resource2.txt") ==
+        BOOST_TEST(readFileAsStr(unpackedResources.path / "Bundle/Resource2.obj") ==
                    "Here is a second resource in a bundle.");
     }
 
     BOOST_AUTO_TEST_CASE(unpackNonExistingResource) {
-        InlineResources::UnpackedResources unpackedResources("Resources/NonExistingResource.txt");
+        InlineResources::UnpackedResources unpackedResources("NonExistingResource.txt");
 
         BOOST_TEST(boost::filesystem::exists(unpackedResources.path));
 
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Resource.txt"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resource.obj"));
 
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource1.txt"));
-        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Resources/Bundle/Resource2.txt"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Bundle/Resource1.obj"));
+        BOOST_TEST(!boost::filesystem::exists(unpackedResources.path / "Bundle/Resource2.obj"));
     }
 BOOST_AUTO_TEST_SUITE_END()

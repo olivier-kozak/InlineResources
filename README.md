@@ -101,6 +101,18 @@ int main() {
 Be aware that `UnpackedResources` uses RTTI to clean up written files at the end of the scope, so do not try to access
 your resources outside of it.
 
+### Specify a parent directory ###
+
+Declaring and accessing resources that are all being stored within the same subdirectory may be a little bit cumbersome:
+```
+inline_resources(MyProgram path/to/resources/resource.txt path/to/resources/otherResource.txt ...)
+```
+
+Fortunately, this can be simplified by using the parameter *PARENT*:
+```
+inline_resources(MyProgram resource.txt otherResource.txt ... PARENT path/to/resources)
+```
+
 ## Troubleshooting ##
 
 ### The generation process is way too slow ###
